@@ -1,0 +1,28 @@
+{
+  "name": "transient-state",
+  "version": "0.1.0",
+  "description": "",
+  "main": "dist/index.js",
+  "type": "module",
+  "scripts": {
+    "build": "npm-run-all clean compile",
+    "clean": "node -e \"require('node:fs').rmSync('dist', {force: true, recursive: true});\"",
+    "compile": "esbuild index.ts --bundle --outdir=dist --platform=neutral --external:react",
+    "prepublishOnly": "npm run build"
+  },
+  "author": "axtk",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/axtk/transient-state.git"
+  },
+  "peerDependencies": {
+    "groundstate": "^1.0.25",
+    "react": ">=16.8"
+  },
+  "devDependencies": {
+    "@types/react": ">=16.8",
+    "esbuild": "^0.25.3",
+    "npm-run-all": "^4.1.5"
+  }
+}
