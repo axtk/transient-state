@@ -34,7 +34,7 @@ const ItemList = () => {
 
 const Status = () => {
     // reading the 'fetch-items' state updated in ItemList
-    let [state] = useTransientState('fetch-items');
+    const [state] = useTransientState('fetch-items');
 
     if (!state.complete)
         return 'Busy';
