@@ -6,13 +6,13 @@ Installation: `npm i transient-state`
 
 ## Usage
 
-Objective: Track the pending state of the async `fetchItems()` action to tell the user whether the UI is busy (preferably without rewriting the action and the app's state management).
+Objective: Track the pending state of the async `fetchItems()` action to tell the user whether the UI is busy or encountered an error (preferably without rewriting the action and the app's state management).
 
 ```diff
 import {useTransientState} from 'transient-state';
 
 const ItemList = () => {
-    const [items, setItems] = useState();
+    const [items, setItems] = useState([]);
     // with the optional custom string key parameter, `state`
     // can be accessed from other components
 +   const [state, withState] = useTransientState('fetch-items');
