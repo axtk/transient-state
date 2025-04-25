@@ -46,4 +46,4 @@ const Status = () => {
 };
 ```
 
-[Live demo](https://codesandbox.io/p/sandbox/transient-state-demo-3xwl78?file=%2Fsrc%2FItemList.js%3A11%2C19)
+[Live demo](https://codesandbox.io/p/sandbox/transient-state-demo-3xwl78?file=%2Fsrc%2FItemList.js)
