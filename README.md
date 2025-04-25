@@ -8,24 +8,26 @@ Installation: `npm i transient-state`
 
 Objective: Track the pending state of the async `fetchItems()` action to tell the user whether the UI is busy (preferably without rewriting the action and the app's state management).
 
-- add `const [state, withState] = useTransientState('action-key');`, with a custom string key parameter to access the state from other components, or without a key to use `state` locally;
-- wrap the async action into `withState()` returned from the hook: `withState(fetchItems())`, which preserves the action's returned value;
-- use the `state` object returned from the hook to handle the action's pending (`!state.complete`) or failed (`state.error`) status.
-
-```js
+```diff
 import {useTransientState} from 'transient-state';
 
 const ItemList = () => {
     const [items, setItems] = useState();
-    const [state, withState] = useTransientState('fetch-items');
+    // with the optional custom string key parameter, `state`
+    // can be accessed from other components
++   const [state, withState] = useTransientState('fetch-items');
 
     useEffect(() => {
         // wrapped fetchItems() to track the async action state
-        withState(fetchItems()).then(setItems);
+-       fetchItems().then(setItems);
++       withState(fetchItems()).then(setItems);
     }, [fetchItems, withState]);
 
-    if (!state.complete)
-        return <p>Loading...</p>;
++   if (!state.complete)
++       return <p>Loading...</p>;
+
++   if (state.error)
++       return <p>An error occurred</p>;
 
     return <ul>{items.map(/* ... */)}</ul>;
 };
