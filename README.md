@@ -13,12 +13,12 @@ import {useTransientState} from 'transient-state';
 
 const ItemList = () => {
     const [items, setItems] = useState([]);
-    // with the optional custom string key parameter, `state`
-    // can be accessed from other components
+    // with the optional custom string key parameter, `state` can be
+    // accessed from other components, and only locally without a key
 +   const [state, withState] = useTransientState('fetch-items');
 
     useEffect(() => {
-        // wrapped fetchItems() to track the async action state
+        // wrapped fetchItems() to track the async action's state
 -       fetchItems().then(setItems);
 +       withState(fetchItems()).then(setItems);
     }, [fetchItems, withState]);
