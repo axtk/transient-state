@@ -1,7 +1,7 @@
 {
   "name": "transient-state",
   "version": "1.1.2",
-  "description": "",
+  "description": "Uncluttered async action state tracking for React apps",
   "main": "dist/index.js",
   "type": "module",
   "scripts": {
@@ -16,6 +16,11 @@
     "type": "git",
     "url": "git+https://github.com/axtk/transient-state.git"
   },
+  "keywords": [
+    "async actions",
+    "pending state",
+    "react"
+  ],
   "peerDependencies": {
     "groundstate": "^1.0.25",
     "react": ">=16.8"
