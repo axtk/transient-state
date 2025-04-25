@@ -3,15 +3,20 @@ import {SetStoreState, Store, useStore} from 'groundstate';
 import {TransientStateContext} from './TransientStateContext';
 import type {TransientState} from './TransientState';
 
+export type WithStateOptions = {
+    silent?: boolean;
+    throws?: boolean;
+};
+
 /**
  * Returns an array containing `[state, withState, setState]`:
  * - `state` of a value passed to `withState()` reflecting its
  * completeness (which is `false` if the value is a Promise in the
  * pending state), an error (if the value is a rejected Promise), and
  * a timestamp of the latest state update;
- * - `withState(value, [overt=true])` tracks the state of the `value`
- * passed as the first parameter, setting the optional boolean `overt`
- * parameter to `false` prevents setting the state's `complete` to
+ * - `withState(value, [options])` tracks the state of the `value`
+ * passed as the first parameter, setting the optional options
+ * to `{silent: true}` prevents setting the state's `complete` to
  * `false` while it's pending (e.g. for background or optimistic
  * updates);
  * - `setState()` to directly update the state (normally unnecessary).
@@ -54,9 +59,9 @@ export function useTransientState(
 
     let [state, setState] = useStore(resolvedStore);
 
-    let withState = useCallback(<T>(value: T, overt = true): T => {
+    let withState = useCallback(<T>(value: T, options?: WithStateOptions): T => {
         if (value instanceof Promise) {
-            if (overt)
+            if (!options?.silent)
                 setState(prevState => ({
                     ...prevState,
                     complete: false,
@@ -79,7 +84,8 @@ export function useTransientState(
                         time: Date.now(),
                     });
 
-                    throw error;
+                    if (options?.throws)
+                        throw error;
                 }) as T;
         }
 
