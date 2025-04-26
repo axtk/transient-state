@@ -63,6 +63,7 @@ export function useTransientState(
             if (!options?.silent)
                 setState(prevState => ({
                     ...prevState,
+                    initialized: true,
                     complete: false,
                 }));
 
@@ -70,6 +71,7 @@ export function useTransientState(
                 .then(resolvedValue => {
                     setState({
                         error: undefined,
+                        initialized: true,
                         complete: true,
                         time: Date.now(),
                     });
@@ -79,6 +81,7 @@ export function useTransientState(
                 .catch(error => {
                     setState({
                         error,
+                        initialized: true,
                         complete: true,
                         time: Date.now(),
                     });
@@ -90,6 +93,7 @@ export function useTransientState(
 
         setState({
             error: undefined,
+            initialized: true,
             complete: true,
             time: Date.now(),
         });
