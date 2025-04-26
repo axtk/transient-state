@@ -6,6 +6,7 @@ import type {TransientState} from './TransientState';
 export type WithStateOptions = {
     silent?: boolean;
     throws?: boolean;
+    delay?: number;
 };
 
 /**
@@ -57,16 +58,36 @@ export function useTransientState(
 
     let withState = useCallback(<T>(value: T, options?: WithStateOptions): T => {
         if (value instanceof Promise) {
-            if (!options?.silent)
-                setState({
-                    error: undefined,
-                    initialized: true,
-                    complete: false,
-                    time: Date.now(),
-                });
+            let delayedPending: ReturnType<typeof setTimeout> | null = null;
+
+            if (!options?.silent) {
+                let delay = options?.delay;
+
+                if (delay === undefined)
+                    setState({
+                        error: undefined,
+                        initialized: true,
+                        complete: false,
+                        time: Date.now(),
+                    });
+                else
+                    delayedPending = setTimeout(() => {
+                        setState({
+                            error: undefined,
+                            initialized: true,
+                            complete: false,
+                            time: Date.now(),
+                        });
+
+                        delayedPending = null;
+                    }, delay);
+            }
 
             return value
                 .then(resolvedValue => {
+                    if (delayedPending !== null)
+                        clearTimeout(delayedPending);
+
                     setState({
                         error: undefined,
                         initialized: true,
@@ -77,6 +98,9 @@ export function useTransientState(
                     return resolvedValue;
                 })
                 .catch(error => {
+                    if (delayedPending !== null)
+                        clearTimeout(delayedPending);
+
                     setState({
                         error,
                         initialized: true,
