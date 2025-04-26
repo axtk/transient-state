@@ -10,13 +10,10 @@ export type WithStateOptions = {
 
 /**
  * Returns an array containing `[state, withState, setState]`:
- * - `state` of a value passed to `withState()` reflecting its
- * completeness (which is `false` if the value is a Promise in the
- * pending state), an error (if the value is a rejected Promise),
- * and a timestamp of the latest state update;
+ * - `state` reflects the state of a value passed to `withState()`;
  * - `withState(value, [options])` enables the tracking of the state
  * of `value`; setting the options to `{silent: true}` prevents
- * switching the state's `complete` to `false` while it's pending
+ * `withState()` from updating the state while `value` is pending
  * (e.g. for background or optimistic updates);
  * - `setState()` to directly update the state (normally unnecessary).
  */
