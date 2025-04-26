@@ -58,11 +58,12 @@ export function useTransientState(
     let withState = useCallback(<T>(value: T, options?: WithStateOptions): T => {
         if (value instanceof Promise) {
             if (!options?.silent)
-                setState(prevState => ({
-                    ...prevState,
+                setState({
+                    error: undefined,
                     initialized: true,
                     complete: false,
-                }));
+                    time: Date.now(),
+                });
 
             return value
                 .then(resolvedValue => {
