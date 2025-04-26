@@ -22,8 +22,8 @@
     "react"
   ],
   "peerDependencies": {
-    "groundstate": "^1.0.25",
-    "react": ">=16.8"
+    "react": ">=16.8",
+    "groundstate": "^1.0.26"
   },
   "devDependencies": {
     "@types/react": ">=16.8",
