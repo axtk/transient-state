@@ -23,7 +23,7 @@
   ],
   "peerDependencies": {
     "react": ">=16.8",
-    "groundstate": "^1.0.26"
+    "groundstate": "^1.1.0"
   },
   "devDependencies": {
     "@types/react": ">=16.8",
