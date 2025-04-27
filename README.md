@@ -58,7 +58,7 @@ Silently tracking the action's pending status, e.g. for background or optimistic
 + withState(fetchItems(), {silent: true})
 ```
 
-Revealing the action's pending status after a delay to avoid flashing a process indicator when the action is expected to complete quickly most of the times:
+Revealing the action's pending status after a delay to avoid flashing a process indicator when the action is likely to complete by the end of the delay:
 
 ```diff
 - withState(fetchItems())
