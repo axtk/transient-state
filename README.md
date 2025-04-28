@@ -13,7 +13,7 @@ import {useTransientState} from 'transient-state';
 
 const ItemList = () => {
     const [items, setItems] = useState([]);
-+   const [state, withState] = useTransientState();
++   const [state, withState] = useTransientState('fetch-items');
 
     useEffect(() => {
         // wrapping fetchItems() to track the async action's state
@@ -29,22 +29,10 @@ const ItemList = () => {
 
     return <ul>{items.map(/* ... */)}</ul>;
 };
-```
-
-Sharing the action's state across multiple components can be done by passing a custom string key to `useTransientState()` that will be assigned to the particular state:
-
-```diff
-const ItemList = () => {
-    const [items, setItems] = useState([]);
--   const [state, withState] = useTransientState();
-+   const [state, withState] = useTransientState('fetch-items');
-
-    // ...
-};
 
 const Status = () => {
     // reading the 'fetch-items' state updated in ItemList
-    const [state] = useTransientState('fetch-items');
++   const [state] = useTransientState('fetch-items');
 
     if (!state.initialized)
         return 'Initial';
@@ -59,7 +47,9 @@ const Status = () => {
 };
 ```
 
-[Live demo](https://codesandbox.io/p/sandbox/transient-state-demo-3xwl78?file=%2Fsrc%2FItemList.js)
+[Live demo](https://codesandbox.io/p/sandbox/shared-transient-state-demo-35ktct?file=%2Fsrc%2FItemList.js)
+
+If the action's state is only used within a single component, it can be used locally by omitting the string key parameter of the `useTransientState()` hook.
 
 Silently tracking the action's pending state, e.g. with background or optimistic updates (preventing `state.complete` from switching to `false` in the pending state):
 
