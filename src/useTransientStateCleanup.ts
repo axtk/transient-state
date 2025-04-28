@@ -10,11 +10,13 @@ import {TransientStateContext} from './TransientStateContext';
  *
  * '*' as a key will signal to remove all items from the context.
  */
-export function useTransientStateCleanup(key: string | string[]) {
+export function useTransientStateCleanup(key: string | string[] | Set<string>) {
     let transientState = useContext(TransientStateContext);
 
     return useCallback(() => {
-        let keys = new Set(Array.isArray(key) ? key : [key]);
+        let keys = key instanceof Set
+            ? key
+            : new Set(Array.isArray(key) ? key : [key]);
 
         if (keys.has('*')) {
             transientState.clear();
