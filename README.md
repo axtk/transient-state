@@ -13,12 +13,10 @@ import {useTransientState} from 'transient-state';
 
 const ItemList = () => {
     const [items, setItems] = useState([]);
-    // with the optional custom string key parameter, `state` can be
-    // accessed from other components, and only locally without a key
-+   const [state, withState] = useTransientState('fetch-items');
++   const [state, withState] = useTransientState();
 
     useEffect(() => {
-        // wrapped fetchItems() to track the async action's state
+        // wrapping fetchItems() to track the async action's state
 -       fetchItems().then(setItems);
 +       withState(fetchItems()).then(setItems);
     }, [fetchItems, withState]);
@@ -30,6 +28,18 @@ const ItemList = () => {
 +       return <p>An error occurred</p>;
 
     return <ul>{items.map(/* ... */)}</ul>;
+};
+```
+
+Sharing the action's state across multiple components can be done by passing a custom string key to `useTransientState()` that will be assigned to the particular state:
+
+```diff
+const ItemList = () => {
+    const [items, setItems] = useState([]);
+-   const [state, withState] = useTransientState();
++   const [state, withState] = useTransientState('fetch-items');
+
+    // ...
 };
 
 const Status = () => {
