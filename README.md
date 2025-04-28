@@ -61,7 +61,7 @@ const Status = () => {
 
 [Live demo](https://codesandbox.io/p/sandbox/transient-state-demo-3xwl78?file=%2Fsrc%2FItemList.js)
 
-Silently tracking the action's pending state, e.g. for background or optimistic updates (without setting `state.complete` to `false` in the pending status):
+Silently tracking the action's pending state, e.g. with background or optimistic updates (preventing `state.complete` from switching to `false` in the pending state):
 
 ```diff
 - withState(fetchItems())
