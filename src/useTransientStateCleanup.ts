@@ -8,12 +8,18 @@ import {TransientStateContext} from './TransientStateContext';
  * With a key ending with '*', the cleanup function will remove the
  * keys starting like the given key.
  *
- * '*' as a key will signal to remove all items from the context.
+ * '*' as a key, or providing no key, will signal to remove all items
+ * from the context.
  */
-export function useTransientStateCleanup(key: string | string[] | Set<string>) {
+export function useTransientStateCleanup(key?: string | string[] | Set<string>) {
     let transientState = useContext(TransientStateContext);
 
     return useCallback(() => {
+        if (key === undefined) {
+            transientState.clear();
+            return;
+        }
+
         let keys = key instanceof Set
             ? key
             : new Set(Array.isArray(key) ? key : [key]);
