@@ -65,20 +65,22 @@ export function useTransientState(
                 let delay = options?.delay;
 
                 if (delay === undefined)
-                    setState({
+                    setState(prevState => ({
+                        ...prevState,
                         error: undefined,
                         initialized: true,
                         complete: false,
                         time: Date.now(),
-                    });
+                    }));
                 else
                     delayedPending = setTimeout(() => {
-                        setState({
+                        setState(prevState => ({
+                            ...prevState,
                             error: undefined,
                             initialized: true,
                             complete: false,
                             time: Date.now(),
-                        });
+                        }));
 
                         delayedPending = null;
                     }, delay);
@@ -89,12 +91,13 @@ export function useTransientState(
                     if (delayedPending !== null)
                         clearTimeout(delayedPending);
 
-                    setState({
+                    setState(prevState => ({
+                        ...prevState,
                         error: undefined,
                         initialized: true,
                         complete: true,
                         time: Date.now(),
-                    });
+                    }));
 
                     return resolvedValue;
                 })
@@ -102,24 +105,26 @@ export function useTransientState(
                     if (delayedPending !== null)
                         clearTimeout(delayedPending);
 
-                    setState({
+                    setState(prevState => ({
+                        ...prevState,
                         error,
                         initialized: true,
                         complete: true,
                         time: Date.now(),
-                    });
+                    }));
 
                     if (options?.throws)
                         throw error;
                 }) as T;
         }
 
-        setState({
+        setState(prevState => ({
+            ...prevState,
             error: undefined,
             initialized: true,
             complete: true,
             time: Date.now(),
-        });
+        }));
 
         return value;
     }, [setState]);
