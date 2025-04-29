@@ -51,21 +51,21 @@ const Status = () => {
 
 If the action's state is only used within a single component, it can be used locally by omitting the string key parameter of the `useTransientState()` hook.
 
-Silently tracking the action's pending state, e.g. with background or optimistic updates (preventing `state.complete` from switching to `false` in the pending state):
+🔹 Silently tracking the action's pending state, e.g. with background or optimistic updates (preventing `state.complete` from switching to `false` in the pending state):
 
 ```diff
 - withState(fetchItems())
 + withState(fetchItems(), {silent: true})
 ```
 
-Revealing the action's pending state after a delay to avoid flashing a process indicator when the action is likely to complete by the end of the delay:
+🔹 Revealing the action's pending state after a delay to avoid flashing a process indicator when the action is likely to complete by the end of the delay:
 
 ```diff
 - withState(fetchItems())
 + withState(fetchItems(), {delay: 500})
 ```
 
-Allowing the action's Promise value to reject explicitly (e.g. in order to provide the action with a custom rejection handler) along with exposing `state.error` that goes by default:
+🔹 Allowing the action's Promise value to reject explicitly (e.g. in order to provide the action with a custom rejection handler) along with exposing `state.error` that goes by default:
 
 ```diff
 - withState(fetchItems())
