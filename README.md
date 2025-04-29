@@ -64,3 +64,10 @@ Revealing the action's pending state after a delay to avoid flashing a process i
 - withState(fetchItems())
 + withState(fetchItems(), {delay: 500})
 ```
+
+Allowing the action's Promise value to reject explicitly (e.g. in order to provide the action with a custom rejection handler) along with exposing `state.error` that goes by default:
+
+```diff
+- withState(fetchItems())
++ withState(fetchItems(), {throws: true}).catch(handleError)
+```
