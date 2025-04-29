@@ -71,3 +71,14 @@ If the action's state is only used within a single component, it can be used loc
 - withState(fetchItems())
 + withState(fetchItems(), {throws: true}).catch(handleError)
 ```
+
+🔹 Providing an isolated instance of initial shared action state, e.g. for tests or SSR (normally unnecessary for client-side rendering where the default context value is sufficient):
+
+```diff
++ import {TransientStateProvider} from 'transient-state';
+
+- <App/>
++ <TransientStateProvider>
++     <App/>
++ </TransientStateProvider>
+```
