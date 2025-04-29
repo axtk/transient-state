@@ -1,3 +1,4 @@
+export * from './src/createTransientState';
 export * from './src/getTransientStateContextValue';
 export * from './src/TransientState';
 export * from './src/TransientStateContext';

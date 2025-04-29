@@ -1,5 +1,6 @@
 import {useCallback, useContext, useMemo, useRef, useState} from 'react';
 import {SetStoreState, Store, isStore, useStore} from 'groundstate';
+import {createTransientState as createState} from './createTransientState';
 import {TransientStateContext} from './TransientStateContext';
 import type {TransientState} from './TransientState';
 
@@ -67,19 +68,13 @@ export function useTransientState(
                 if (delay === undefined)
                     setState(prevState => ({
                         ...prevState,
-                        error: undefined,
-                        initialized: true,
-                        complete: false,
-                        time: Date.now(),
+                        ...createState(true, false),
                     }));
                 else
                     delayedPending = setTimeout(() => {
                         setState(prevState => ({
                             ...prevState,
-                            error: undefined,
-                            initialized: true,
-                            complete: false,
-                            time: Date.now(),
+                            ...createState(true, false),
                         }));
 
                         delayedPending = null;
@@ -93,10 +88,7 @@ export function useTransientState(
 
                     setState(prevState => ({
                         ...prevState,
-                        error: undefined,
-                        initialized: true,
-                        complete: true,
-                        time: Date.now(),
+                        ...createState(true, true),
                     }));
 
                     return resolvedValue;
@@ -107,10 +99,7 @@ export function useTransientState(
 
                     setState(prevState => ({
                         ...prevState,
-                        error,
-                        initialized: true,
-                        complete: true,
-                        time: Date.now(),
+                        ...createState(true, true, error),
                     }));
 
                     if (options?.throws)
@@ -120,10 +109,7 @@ export function useTransientState(
 
         setState(prevState => ({
             ...prevState,
-            error: undefined,
-            initialized: true,
-            complete: true,
-            time: Date.now(),
+            ...createState(true, true),
         }));
 
         return value;
