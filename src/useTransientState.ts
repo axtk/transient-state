@@ -1,5 +1,5 @@
 import {useCallback, useContext, useMemo, useRef, useState} from 'react';
-import {SetStoreState, Store, useStore} from 'groundstate';
+import {SetStoreState, Store, isStore, useStore} from 'groundstate';
 import {TransientStateContext} from './TransientStateContext';
 import type {TransientState} from './TransientState';
 
@@ -35,7 +35,7 @@ export function useTransientState(
     let [itemInited, setItemInited] = useState(false);
 
     let resolvedStore = useMemo(() => {
-        if (store instanceof Store)
+        if (isStore<TransientState>(store))
             return store;
 
         if (typeof store === 'string') {
