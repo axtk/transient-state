@@ -51,6 +51,8 @@ const Status = () => {
 
 If the action's state is only used within a single component, it can be used locally by omitting the string key parameter of the `useTransientState()` hook.
 
+In the example above, the action's value (the `items` array) is stored in the component's local state, but it can certainly live in the app's shared state instead.
+
 🔹 Silently tracking the action's pending state, e.g. with background or optimistic updates (preventing `state.complete` from switching to `false` in the pending state):
 
 ```diff
