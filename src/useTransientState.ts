@@ -32,7 +32,7 @@ export function useTransientState(
     SetStoreState<TransientState>,
 ] {
     let storeMap = useContext(TransientStateContext);
-    let storeRef = useRef(new Store<TransientState>({}));
+    let storeRef = useRef<Store<TransientState> | null>(null);
     let [storeItemInited, setStoreItemInited] = useState(false);
 
     let resolvedStore = useMemo(() => {
@@ -43,7 +43,7 @@ export function useTransientState(
             let storeItem = storeMap.get(store);
 
             if (!storeItem) {
-                storeItem = new Store<TransientState>({});
+                storeItem = new Store(createState());
                 storeMap.set(store, storeItem);
 
                 if (!storeItemInited)
@@ -52,6 +52,9 @@ export function useTransientState(
 
             return storeItem;
         }
+
+        if (!storeRef.current)
+            storeRef.current = new Store(createState());
 
         return storeRef.current;
     }, [store, storeMap, storeRef, storeItemInited]);
