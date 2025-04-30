@@ -8,7 +8,8 @@
     "build": "npm-run-all clean compile",
     "clean": "node -e \"require('node:fs').rmSync('dist', {force: true, recursive: true});\"",
     "compile": "esbuild index.ts --bundle --outdir=dist --platform=neutral --external:react",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "preversion": "npm run build"
   },
   "author": "axtk",
   "license": "ISC",
