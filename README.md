@@ -49,9 +49,14 @@ const Status = () => {
 
 [Live demo](https://codesandbox.io/p/sandbox/shared-transient-state-demo-35ktct?file=%2Fsrc%2FItemList.js)
 
-If the action's state is only used within a single component, it can be used locally by omitting the string key parameter of the `useTransientState()` hook.
+🔹 If the action's state is only used within a single component, it can be used locally by omitting the string key parameter of the `useTransientState()` hook.
 
-In the example above, the action's value (the `items` array) is stored in the component's local state, but it can certainly live in the app's shared state instead.
+```diff
+- const [state, withState] = useTransientState('fetch-items');
++ const [state, withState] = useTransientState();
+```
+
+🔹 In the example above, the action's value (the `items` array) is stored in the component's local state, but it can certainly live in the app's shared state of the developer's choice instead.
 
 🔹 Silently tracking the action's pending state, e.g. with background or optimistic updates (preventing `state.complete` from switching to `false` in the pending state):
 
@@ -60,7 +65,7 @@ In the example above, the action's value (the `items` array) is stored in the co
 + withState(fetchItems(), {silent: true})
 ```
 
-🔹 Revealing the action's pending state after a delay to avoid flashing a process indicator when the action is likely to complete by the end of the delay:
+🔹 Revealing the action's pending state after a delay (e.g. to avoid flashing a process indicator when the action is likely to complete by the end of the delay):
 
 ```diff
 - withState(fetchItems())
