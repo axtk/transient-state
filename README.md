@@ -13,6 +13,8 @@ import {useTransientState} from 'transient-state';
 
 const ItemList = () => {
     const [items, setItems] = useState([]);
+    // the custom string key parameter tags the action's state so
+    // that another component can access this state by the same tag
 +   const [state, withState] = useTransientState('fetch-items');
 
     useEffect(() => {
@@ -49,7 +51,7 @@ const Status = () => {
 
 [Live demo](https://codesandbox.io/p/sandbox/shared-transient-state-demo-35ktct?file=%2Fsrc%2FItemList.js)
 
-🔹 If the action's state is only used within a single component, it can be used locally by omitting the string key parameter of the `useTransientState()` hook.
+🔹 If the action's state is only used within a single component, it can be used locally by omitting the custom string key parameter of the `useTransientState()` hook.
 
 ```diff
 - const [state, withState] = useTransientState('fetch-items');
