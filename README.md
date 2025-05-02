@@ -81,7 +81,7 @@ const Status = () => {
 + withState(fetchItems(), {throws: true}).catch(handleError)
 ```
 
-🔹 Providing an isolated instance of initial shared action state, e.g. for tests or SSR (it can be unnecessary for client-side rendering where the default context value is sufficient):
+🔹 Providing an isolated instance of initial shared action state, e.g. for tests or SSR (it can be unnecessary for client-side rendering where the default context value is sufficient, but it can also be used to separate action states of larger self-contained portions of a web app):
 
 ```diff
 + import {TransientStateProvider} from 'transient-state';
