@@ -1,6 +1,6 @@
 {
   "name": "transient-state",
-  "version": "1.4.4",
+  "version": "1.4.5",
   "description": "Uncluttered async action state tracking for React apps",
   "main": "dist/index.js",
   "type": "module",
