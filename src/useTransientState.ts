@@ -29,7 +29,7 @@ export type WithStateOptions = {
  * of `value`; setting the options to `{silent: true}` prevents
  * `withState()` from updating the state while `value` is pending
  * (e.g. for background or optimistic updates);
- * - `setState()` to directly update the state (normally unnecessary).
+ * - `setState()` to directly update the state.
  */
 export function useTransientState(
     /**
