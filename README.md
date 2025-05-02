@@ -88,6 +88,19 @@ const Status = () => {
 
 - <App/>
 + <TransientStateProvider>
-+     <App/>
++   <App/>
 + </TransientStateProvider>
+```
+
+🔹 Setting a custom initial action state (which is empty by default):
+
+```diff
++ const initialState = {
++   'fetch-items': { initialized: true, complete: true },
++ };
+
+- <TransientStateProvider>
++ <TransientStateProvider value={initialState}>
+    <App/>
+  </TransientStateProvider>
 ```
