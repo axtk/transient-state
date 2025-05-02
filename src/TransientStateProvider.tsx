@@ -1,6 +1,5 @@
 import {ReactNode, useMemo, useRef} from 'react';
 import type {Store} from 'groundstate';
-import {getTransientStateContextValue} from './getTransientStateContextValue';
 import type {TransientState} from './TransientState';
 import {TransientStateContext} from './TransientStateContext';
 
@@ -13,14 +12,14 @@ export const TransientStateProvider = ({
     value,
     children,
 }: TransientStateProviderProps) => {
-    let defaultValueRef = useRef<Map<string, Store<TransientState>> | undefined>(undefined);
+    let defaultValueRef = useRef<Map<string, Store<TransientState>> | null>(null);
 
     let resolvedValue = useMemo(() => {
         if (value !== undefined && value !== null)
             return value;
 
-        if (defaultValueRef.current === undefined)
-            defaultValueRef.current = getTransientStateContextValue();
+        if (defaultValueRef.current === null)
+            defaultValueRef.current = new Map<string, Store<TransientState>>();
 
         return defaultValueRef.current;
     }, [value]);

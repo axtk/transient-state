@@ -1,4 +1,5 @@
 import {createContext} from 'react';
-import {getTransientStateContextValue} from './getTransientStateContextValue';
+import type {Store} from 'groundstate';
+import type {TransientState} from './TransientState';
 
-export const TransientStateContext = createContext(getTransientStateContextValue());
+export const TransientStateContext = createContext(new Map<string, Store<TransientState>>());

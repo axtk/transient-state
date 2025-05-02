@@ -1,8 +1,20 @@
 import {useCallback, useContext, useMemo, useRef, useState} from 'react';
 import {SetStoreState, Store, isStore, useStore} from 'groundstate';
-import {createTransientState as createState} from './createTransientState';
 import {TransientStateContext} from './TransientStateContext';
 import type {TransientState} from './TransientState';
+
+function createState(
+    initialized = false,
+    complete = false,
+    error?: unknown,
+): TransientState {
+    return {
+        initialized,
+        complete,
+        error,
+        time: Date.now(),
+    };
+}
 
 export type WithStateOptions = {
     silent?: boolean;
