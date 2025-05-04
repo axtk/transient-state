@@ -10,7 +10,7 @@
     "compile": "esbuild index.ts --bundle --outdir=dist --platform=neutral --external:react",
     "prepublishOnly": "npm run build",
     "preversion": "npm-run-all shape build",
-    "shape": "npx codeshape src index.ts"
+    "shape": "npx codeshape"
   },
   "author": "axtk",
   "license": "ISC",
