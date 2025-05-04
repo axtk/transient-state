@@ -9,7 +9,8 @@
     "clean": "node -e \"require('node:fs').rmSync('dist', {force: true, recursive: true});\"",
     "compile": "esbuild index.ts --bundle --outdir=dist --platform=neutral --external:react",
     "prepublishOnly": "npm run build",
-    "preversion": "npm run build"
+    "preversion": "npm-run-all shape build",
+    "shape": "npx codeshape src index.ts"
   },
   "author": "axtk",
   "license": "ISC",

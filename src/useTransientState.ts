@@ -1,7 +1,7 @@
+import {type SetStoreState, Store, isStore, useStore} from 'groundstate';
 import {useCallback, useContext, useMemo, useRef, useState} from 'react';
-import {SetStoreState, Store, isStore, useStore} from 'groundstate';
-import {TransientStateContext} from './TransientStateContext';
 import type {TransientState} from './TransientState';
+import {TransientStateContext} from './TransientStateContext';
 
 function createState(
     initialized = false,
@@ -38,18 +38,13 @@ export function useTransientState(
      * components.
      */
     store?: string | Store<TransientState> | null,
-): [
-    TransientState,
-    <T>(value: T) => T,
-    SetStoreState<TransientState>,
-] {
+): [TransientState, <T>(value: T) => T, SetStoreState<TransientState>] {
     let storeMap = useContext(TransientStateContext);
     let storeRef = useRef<Store<TransientState> | null>(null);
     let [storeItemInited, setStoreItemInited] = useState(false);
 
     let resolvedStore = useMemo(() => {
-        if (isStore<TransientState>(store))
-            return store;
+        if (isStore<TransientState>(store)) return store;
 
         if (typeof store === 'string') {
             let storeItem = storeMap.get(store);
@@ -58,77 +53,77 @@ export function useTransientState(
                 storeItem = new Store(createState());
                 storeMap.set(store, storeItem);
 
-                if (!storeItemInited)
-                    setStoreItemInited(true);
+                if (!storeItemInited) setStoreItemInited(true);
             }
 
             return storeItem;
         }
 
-        if (!storeRef.current)
-            storeRef.current = new Store(createState());
+        if (!storeRef.current) storeRef.current = new Store(createState());
 
         return storeRef.current;
-    }, [store, storeMap, storeRef, storeItemInited]);
+    }, [store, storeMap, storeItemInited]);
 
     let [state, setState] = useStore(resolvedStore);
 
-    let withState = useCallback(<T>(value: T, options?: WithStateOptions): T => {
-        if (value instanceof Promise) {
-            let delayedPending: ReturnType<typeof setTimeout> | null = null;
+    let withState = useCallback(
+        <T>(value: T, options?: WithStateOptions): T => {
+            if (value instanceof Promise) {
+                let delayedPending: ReturnType<typeof setTimeout> | null = null;
 
-            if (!options?.silent) {
-                let delay = options?.delay;
+                if (!options?.silent) {
+                    let delay = options?.delay;
 
-                if (delay === undefined)
-                    setState(prevState => ({
-                        ...prevState,
-                        ...createState(true, false),
-                    }));
-                else
-                    delayedPending = setTimeout(() => {
+                    if (delay === undefined)
                         setState(prevState => ({
                             ...prevState,
                             ...createState(true, false),
                         }));
+                    else
+                        delayedPending = setTimeout(() => {
+                            setState(prevState => ({
+                                ...prevState,
+                                ...createState(true, false),
+                            }));
 
-                        delayedPending = null;
-                    }, delay);
+                            delayedPending = null;
+                        }, delay);
+                }
+
+                return value
+                    .then(resolvedValue => {
+                        if (delayedPending !== null)
+                            clearTimeout(delayedPending);
+
+                        setState(prevState => ({
+                            ...prevState,
+                            ...createState(true, true),
+                        }));
+
+                        return resolvedValue;
+                    })
+                    .catch(error => {
+                        if (delayedPending !== null)
+                            clearTimeout(delayedPending);
+
+                        setState(prevState => ({
+                            ...prevState,
+                            ...createState(true, true, error),
+                        }));
+
+                        if (options?.throws) throw error;
+                    }) as T;
             }
 
-            return value
-                .then(resolvedValue => {
-                    if (delayedPending !== null)
-                        clearTimeout(delayedPending);
+            setState(prevState => ({
+                ...prevState,
+                ...createState(true, true),
+            }));
 
-                    setState(prevState => ({
-                        ...prevState,
-                        ...createState(true, true),
-                    }));
-
-                    return resolvedValue;
-                })
-                .catch(error => {
-                    if (delayedPending !== null)
-                        clearTimeout(delayedPending);
-
-                    setState(prevState => ({
-                        ...prevState,
-                        ...createState(true, true, error),
-                    }));
-
-                    if (options?.throws)
-                        throw error;
-                }) as T;
-        }
-
-        setState(prevState => ({
-            ...prevState,
-            ...createState(true, true),
-        }));
-
-        return value;
-    }, [setState]);
+            return value;
+        },
+        [setState],
+    );
 
     return [state, withState, setState];
 }
