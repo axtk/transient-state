@@ -92,7 +92,7 @@ const Status = () => {
 + </TransientStateProvider>
 ```
 
-🔹 Setting a custom initial action state (which is empty by default):
+🔹 Setting a custom initial action state (which is fully optional):
 
 ```diff
 + const initialState = {
@@ -104,3 +104,5 @@ const Status = () => {
     <App/>
   </TransientStateProvider>
 ```
+
+With an explicit value or without, the `<TransientStateProvider>`'s nested components will only respond to updates in the particular action states they subscribed to by means of `useTransientState('action-key')`.
