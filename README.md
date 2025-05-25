@@ -1,6 +1,10 @@
+[![npm](https://flat.badgen.net/npm/v/transient-state?labelColor=345&color=46e)](https://www.npmjs.com/package/transient-state) ![Lightweight](https://flat.badgen.net/bundlephobia/minzip/transient-state/?labelColor=345&color=46e) ![TypeScript ✓](https://flat.badgen.net/badge/TypeScript/✓?labelColor=345&color=345) ![SSR ✓](https://flat.badgen.net/badge/SSR/✓?labelColor=345&color=345)
+
 # transient-state
 
-Uncluttered async action state tracking for React apps: No need to rearrange the app's shared state setup and to rewrite the async actions.
+*Uncluttered async action state tracking for React apps*
+
+No need to rearrange the app's shared state setup and to rewrite the async actions.
 
 Installation: `npm i transient-state`
 
