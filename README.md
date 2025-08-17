@@ -1,3 +1,8 @@
+> [!WARNING]
+> It's [`@t8/react-pending`](https://github.com/t8dev/react-pending) now.
+
+---
+
 [![npm](https://flat.badgen.net/npm/v/transient-state?labelColor=345&color=46e)](https://www.npmjs.com/package/transient-state) [![Lightweight](https://flat.badgen.net/bundlephobia/minzip/transient-state/?labelColor=345&color=46e)](https://bundlephobia.com/package/transient-state) ![TypeScript ✓](https://flat.badgen.net/badge/TypeScript/✓?labelColor=345&color=345) ![SSR ✓](https://flat.badgen.net/badge/SSR/✓?labelColor=345&color=345)
 
 # transient-state
