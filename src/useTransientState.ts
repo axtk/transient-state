@@ -1,4 +1,4 @@
-import {type SetStoreState, Store, isStore, useStore} from 'groundstate';
+import {isStore, type SetStoreState, Store, useStore} from 'groundstate';
 import {useCallback, useContext, useMemo, useRef, useState} from 'react';
 import type {TransientState} from './TransientState';
 import {TransientStateContext} from './TransientStateContext';
