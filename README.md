@@ -1,5 +1,5 @@
 > [!WARNING]
-> It's [`@t8/react-pending`](https://github.com/t8dev/react-pending) now.
+> It's [`@t8/react-pending`](https://github.com/t8dash/react-pending) now.
 
 ---
 
